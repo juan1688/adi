@@ -11,7 +11,8 @@ class Company extends \yii\db\ActiveRecord
 
 	public function rules(){
 		return [
-			[["name","description"], "required"],
+			[["user_id","name","description"], "required"],
+			[["user_id"], "integer"],
 			[["description"], "string"],
 			[["name"], "string", "max" => 255]
 		];
@@ -21,6 +22,7 @@ class Company extends \yii\db\ActiveRecord
 	{
 		return [
 			"id"			=>	"ID",
+			"user_id"		=>	"Usuario",
 			"name"			=>	"Nombre",
 			"description"	=>	"Descripción"
 		];
