@@ -3,18 +3,18 @@
 use yii\db\Migration;
 
 /**
- * Class m180108_023139_create_table_pedidos
+ * Class m180111_162211_create_table_supplies
  */
-class m180108_023139_create_table_pedidos extends Migration
+class m180111_162211_create_table_supplies extends Migration
 {
     /**
      * @inheritdoc
      */
-    public function Up()
+    public function safeUp()
     {
-        $this->createTable('pedidos', [
+        $this->createTable('supplies', [
             'id' => $this->primaryKey(),
-            'user_id' => $this->integer()->notNull(),
+            'dish_id' => $this->integer()->notNull(),
             'name' => $this->string(),
             'description' => $this->text(),
         ]);
@@ -23,10 +23,10 @@ class m180108_023139_create_table_pedidos extends Migration
     /**
      * @inheritdoc
      */
-    public function Down()
+    public function safeDown()
     {
-        $this->dropTable('pedidos');
-        echo "m180108_023139_create_table_pedidos tabla eliminada.\n";
+        $this->dropTable('supplies');
+        echo "tabla supplies eliminada.\n";
     }
 
     /*
@@ -38,7 +38,7 @@ class m180108_023139_create_table_pedidos extends Migration
 
     public function down()
     {
-        echo "m180108_023139_create_table_pedidos cannot be reverted.\n";
+        echo "m180111_162211_create_table_supplies cannot be reverted.\n";
 
         return false;
     }
