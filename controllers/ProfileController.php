@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Users;
 use app\models\Profile;
-use app\models\UsersSearch;
+use app\models\ProfileSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UsersController implements the CRUD actions for Users model.
+ * ProfileController implements the CRUD actions for Profile model.
  */
-class UsersController extends Controller
+class ProfileController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,12 +30,12 @@ class UsersController extends Controller
     }
 
     /**
-     * Lists all Users models.
+     * Lists all Profile models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UsersSearch();
+        $searchModel = new ProfileSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,7 +45,7 @@ class UsersController extends Controller
     }
 
     /**
-     * Displays a single Users model.
+     * Displays a single Profile model.
      * @param integer $id
      * @return mixed
      */
@@ -58,34 +57,25 @@ class UsersController extends Controller
     }
 
     /**
-     * Creates a new Users model.
+     * Creates a new Profile model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Users();
-        $profile = new Profile();
+        $model = new Profile();
 
-        // if ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post()) && $model->save() && $profile->save()) {
-        if ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())) {
-
-            $profile->save();
-            $model->profile_id = $profile->profile_id;
-            $model->save();
-
-
-            return $this->redirect(['view', 'id' => $model->user_id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->profile_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'profile' => $profile,
             ]);
         }
     }
 
     /**
-     * Updates an existing Users model.
+     * Updates an existing Profile model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -93,23 +83,18 @@ class UsersController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $profile = new Profile;
-        $profile = $profile::findOne($model->profile_id);
-        // var_dump($profile->second_name);
-        // return;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->user_id]);
+            return $this->redirect(['view', 'id' => $model->profile_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'profile' => $profile,
             ]);
         }
     }
 
     /**
-     * Deletes an existing Users model.
+     * Deletes an existing Profile model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -122,15 +107,15 @@ class UsersController extends Controller
     }
 
     /**
-     * Finds the Users model based on its primary key value.
+     * Finds the Profile model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Users the loaded model
+     * @return Profile the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Users::findOne($id)) !== null) {
+        if (($model = Profile::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

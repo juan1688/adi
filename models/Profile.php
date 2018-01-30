@@ -6,26 +6,26 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
- * This is the model class for table "users".
+ * This is the model class for table "profile".
  *
- * @property integer $user_id
  * @property integer $profile_id
- * @property string $nicename
- * @property string $email
- * @property integer $created_at
- * @property integer $updated_at
+ * @property string $first_name
+ * @property string $second_name
+ * @property string $last_name
+ * @property string $birthdate
+ * @property string $created_at
+ * @property string $updated_at
  * @property string $deleted_at
  */
-class Users extends \yii\db\ActiveRecord
+class Profile extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'users';
+        return 'profile';
     }
-
 
     public function behaviors()
     {
@@ -40,10 +40,8 @@ class Users extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['profile_id', 'created_at', 'updated_at'], 'integer'],
-            [['nicename', 'email'], 'required'],
-            [['deleted_at'], 'safe'],
-            [['nicename', 'email'], 'string', 'max' => 255],
+            [['birthdate', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
+            [['first_name', 'second_name', 'last_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -53,10 +51,11 @@ class Users extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => 'User ID',
             'profile_id' => 'Profile ID',
-            'nicename' => 'Nicename',
-            'email' => 'Email',
+            'first_name' => 'First Name',
+            'second_name' => 'Second Name',
+            'last_name' => 'Last Name',
+            'birthdate' => 'Birthdate',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'deleted_at' => 'Deleted At',

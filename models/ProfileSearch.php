@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Users;
+use app\models\Profile;
 
 /**
- * UsersSearch represents the model behind the search form about `app\models\Users`.
+ * ProfileSearch represents the model behind the search form about `app\models\Profile`.
  */
-class UsersSearch extends Users
+class ProfileSearch extends Profile
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class UsersSearch extends Users
     public function rules()
     {
         return [
-            [['user_id', 'profile_id', 'created_at', 'updated_at'], 'integer'],
-            [['nicename', 'email', 'deleted_at'], 'safe'],
+            [['profile_id'], 'integer'],
+            [['first_name', 'second_name', 'last_name', 'birthdate', 'created_at', 'updated_at', 'deleted_at'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class UsersSearch extends Users
      */
     public function search($params)
     {
-        $query = Users::find();
+        $query = Profile::find();
 
         // add conditions that should always apply here
 
@@ -59,15 +59,16 @@ class UsersSearch extends Users
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'user_id' => $this->user_id,
             'profile_id' => $this->profile_id,
+            'birthdate' => $this->birthdate,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'deleted_at' => $this->deleted_at,
         ]);
 
-        $query->andFilterWhere(['like', 'nicename', $this->nicename])
-            ->andFilterWhere(['like', 'email', $this->email]);
+        $query->andFilterWhere(['like', 'first_name', $this->first_name])
+            ->andFilterWhere(['like', 'second_name', $this->second_name])
+            ->andFilterWhere(['like', 'last_name', $this->last_name]);
 
         return $dataProvider;
     }
