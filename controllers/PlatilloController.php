@@ -3,16 +3,17 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Supplies;
-use app\models\SuppliesSearch;
+use app\models\Platillo;
+use app\models\PlatilloSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
- * SuppliesController implements the CRUD actions for Supplies model.
+ * PlatilloController implements the CRUD actions for Platillo model.
  */
-class SuppliesController extends Controller
+class PlatilloController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +31,12 @@ class SuppliesController extends Controller
     }
 
     /**
-     * Lists all Supplies models.
+     * Lists all Platillo models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SuppliesSearch();
+        $searchModel = new PlatilloSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +46,7 @@ class SuppliesController extends Controller
     }
 
     /**
-     * Displays a single Supplies model.
+     * Displays a single Platillo model.
      * @param integer $id
      * @return mixed
      */
@@ -57,16 +58,23 @@ class SuppliesController extends Controller
     }
 
     /**
-     * Creates a new Supplies model.
+     * Creates a new Platillo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Supplies();
+        $model = new Platillo();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $imageName = $model->nombre;
+            $model->imagen = UploadedFile::getInstance($model,'imagen');
+            $model->imagen->saveAs('uploads/'.$imageName.'.'.$model->file->extension);
+
+            $model->imagen = 'uploads/'.$imageName.'.'.$model->file->extension;
+
+            $model->save();
+            return $this->redirect(['view', 'id' => $model->platillo_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,7 +83,7 @@ class SuppliesController extends Controller
     }
 
     /**
-     * Updates an existing Supplies model.
+     * Updates an existing Platillo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -85,7 +93,7 @@ class SuppliesController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->platillo_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -94,7 +102,7 @@ class SuppliesController extends Controller
     }
 
     /**
-     * Deletes an existing Supplies model.
+     * Deletes an existing Platillo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,15 +115,15 @@ class SuppliesController extends Controller
     }
 
     /**
-     * Finds the Supplies model based on its primary key value.
+     * Finds the Platillo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Supplies the loaded model
+     * @return Platillo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Supplies::findOne($id)) !== null) {
+        if (($model = Platillo::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

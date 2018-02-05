@@ -52,8 +52,12 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $profile = new Profile;
+        $profile = $profile::findOne($model->profile_id);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'profile' => $profile,
         ]);
     }
 
@@ -70,11 +74,11 @@ class UsersController extends Controller
         // if ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post()) && $model->save() && $profile->save()) {
         if ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())) {
 
+            $profile->created_at = date('yyyy-mm-dd');
+            $profile->updated_at = date('yyyy-mm-dd');
             $profile->save();
             $model->profile_id = $profile->profile_id;
             $model->save();
-
-
             return $this->redirect(['view', 'id' => $model->user_id]);
         } else {
             return $this->render('create', [
@@ -95,10 +99,14 @@ class UsersController extends Controller
         $model = $this->findModel($id);
         $profile = new Profile;
         $profile = $profile::findOne($model->profile_id);
-        // var_dump($profile->second_name);
-        // return;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        // if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $profile->load(Yii::$app->request->post())) {
+
+            $profile->updated_at = date('yyyy-mm-dd');
+
+            $profile->save();
+            $model->save();
             return $this->redirect(['view', 'id' => $model->user_id]);
         } else {
             return $this->render('update', [

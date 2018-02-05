@@ -4,24 +4,26 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SuppliesSearch */
+/* @var $model app\models\PlatilloSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="supplies-search">
+<div class="platillo-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'platillo_id') ?>
 
-    <?= $form->field($model, 'dish_id') ?>
+    <?= $form->field($model, 'nombre') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'descripcion') ?>
 
-    <?= $form->field($model, 'description') ?>
+    <?= $form->field($model, 'imagen') ?>
+
+    <?= $form->field($model, 'precio') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

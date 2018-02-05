@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Supplies;
+use app\models\Platillo;
 
 /**
- * SuppliesSearch represents the model behind the search form about `app\models\Supplies`.
+ * PlatilloSearch represents the model behind the search form about `app\models\Platillo`.
  */
-class SuppliesSearch extends Supplies
+class PlatilloSearch extends Platillo
 {
     /**
      * @inheritdoc
@@ -18,8 +18,9 @@ class SuppliesSearch extends Supplies
     public function rules()
     {
         return [
-            [['id', 'dish_id'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['platillo_id'], 'integer'],
+            [['nombre', 'descripcion', 'imagen'], 'safe'],
+            [['precio'], 'number'],
         ];
     }
 
@@ -41,7 +42,7 @@ class SuppliesSearch extends Supplies
      */
     public function search($params)
     {
-        $query = Supplies::find();
+        $query = Platillo::find();
 
         // add conditions that should always apply here
 
@@ -59,12 +60,13 @@ class SuppliesSearch extends Supplies
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'dish_id' => $this->dish_id,
+            'platillo_id' => $this->platillo_id,
+            'precio' => $this->precio,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'nombre', $this->nombre])
+            ->andFilterWhere(['like', 'descripcion', $this->descripcion])
+            ->andFilterWhere(['like', 'imagen', $this->imagen]);
 
         return $dataProvider;
     }

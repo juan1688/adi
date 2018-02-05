@@ -41,12 +41,8 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Users', 'url' => ['/users']],
             ['label' => 'Profile', 'url' => ['/profile']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'Company', 'url' => ['/company/add']],
-            ['label' => 'Dishes', 'url' => ['/dish/index']],
-            ['label' => 'Orders', 'url' => ['/pedido/index']],
-            ['label' => 'Brand', 'url' => ['/brand/index']],
+            ['label' => 'Pedido', 'url' => ['/pedido']],
+            ['label' => 'Platillo', 'url' => ['/platillo']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

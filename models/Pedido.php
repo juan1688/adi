@@ -5,13 +5,16 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "pedidos".
+ * This is the model class for table "pedido".
  *
- * @property integer $id
+ * @property integer $pedido_id
  * @property integer $user_id
- * @property integer $dish_id
- * @property string $name
- * @property string $description
+ * @property integer $platillo_id
+ * @property string $fecha_pedido
+ * @property integer $metodo_de_pago
+ * @property integer $estatus_entrega
+ * @property integer $estatus_pago
+ * @property integer $estatus_cancelacion
  */
 class Pedido extends \yii\db\ActiveRecord
 {
@@ -20,7 +23,7 @@ class Pedido extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'pedidos';
+        return 'pedido';
     }
 
     /**
@@ -29,11 +32,9 @@ class Pedido extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'dish_id'], 'required'],
-            [['user_id', 'dish_id'], 'integer'],
-            [['description'], 'string'],
-            [['date'], 'date', 'format' => 'php:Y-m-d'],
-            [['name'], 'string', 'max' => 255],
+            [['user_id', 'platillo_id'], 'required'],
+            [['user_id', 'platillo_id', 'metodo_de_pago', 'estatus_entrega', 'estatus_pago', 'estatus_cancelacion'], 'integer'],
+            [['fecha_pedido'], 'string'],
         ];
     }
 
@@ -43,12 +44,14 @@ class Pedido extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'pedido_id' => 'Pedido ID',
             'user_id' => 'User ID',
-            'dish_id' => 'Dish ID',
-            'date' => 'Fecha',
-            'name' => 'Name',
-            'description' => 'Description',
+            'platillo_id' => 'Platillo ID',
+            'fecha_pedido' => 'Fecha Pedido',
+            'metodo_de_pago' => 'Metodo De Pago',
+            'estatus_entrega' => 'Estatus Entrega',
+            'estatus_pago' => 'Estatus Pago',
+            'estatus_cancelacion' => 'Estatus Cancelacion',
         ];
     }
 }

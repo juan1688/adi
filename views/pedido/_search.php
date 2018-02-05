@@ -15,15 +15,21 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'pedido_id') ?>
 
     <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'dish_id') ?>
+    <?= $form->field($model, 'platillo_id') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'fecha_pedido') ?>
 
-    <?= $form->field($model, 'description') ?>
+    <?= $form->field($model, 'metodo_de_pago') ?>
+
+    <?php // echo $form->field($model, 'estatus_entrega') ?>
+
+    <?php // echo $form->field($model, 'estatus_pago') ?>
+
+    <?php // echo $form->field($model, 'estatus_cancelacion') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

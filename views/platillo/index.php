@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\SuppliesSearch */
+/* @var $searchModel app\models\PlatilloSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Supplies';
+$this->title = 'Platillos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="supplies-index">
+<div class="platillo-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Supplies', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Platillo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -24,10 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'dish_id',
-            'name',
-            'description:ntext',
+            'platillo_id',
+            'nombre',
+            'descripcion:ntext',
+            'imagen:ntext',
+            'precio',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

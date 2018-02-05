@@ -55,7 +55,7 @@ class Profile extends \yii\db\ActiveRecord
             'first_name' => 'First Name',
             'second_name' => 'Second Name',
             'last_name' => 'Last Name',
-            'birthdate' => 'Birthdate',
+            'birthdate' => 'Fecha de nacimiento',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'deleted_at' => 'Deleted At',

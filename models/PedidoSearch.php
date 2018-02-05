@@ -18,8 +18,8 @@ class PedidoSearch extends Pedido
     public function rules()
     {
         return [
-            [['id', 'user_id', 'dish_id'], 'integer'],
-            [['name', 'description'], 'safe'],
+            [['pedido_id', 'user_id', 'platillo_id', 'metodo_de_pago', 'estatus_entrega', 'estatus_pago', 'estatus_cancelacion'], 'integer'],
+            [['fecha_pedido'], 'safe'],
         ];
     }
 
@@ -59,13 +59,16 @@ class PedidoSearch extends Pedido
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'pedido_id' => $this->pedido_id,
             'user_id' => $this->user_id,
-            'dish_id' => $this->dish_id,
+            'platillo_id' => $this->platillo_id,
+            'metodo_de_pago' => $this->metodo_de_pago,
+            'estatus_entrega' => $this->estatus_entrega,
+            'estatus_pago' => $this->estatus_pago,
+            'estatus_cancelacion' => $this->estatus_cancelacion,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'fecha_pedido', $this->fecha_pedido]);
 
         return $dataProvider;
     }
