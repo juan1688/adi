@@ -18,7 +18,7 @@ class Platillo extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public $file;
+    public $imageFile;
 
     public static function tableName()
     {
@@ -34,7 +34,7 @@ class Platillo extends \yii\db\ActiveRecord
             [['nombre'], 'required'],
             [['descripcion'], 'string'],
             [['precio'], 'number'],
-            [['imagen'], 'file'],
+            [['imagen'], 'file', 'extensions' => 'png, jpg, gif'],
             [['nombre','imagen'], 'string', 'max' => 255],
         ];
     }
@@ -51,5 +51,15 @@ class Platillo extends \yii\db\ActiveRecord
             'imagen' => 'Imagen',
             'precio' => 'Precio',
         ];
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->imageFile->saveAs('uploads/' .date('ymd').'-'.$this->imageFile->baseName . '.' . $this->imageFile->extension);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

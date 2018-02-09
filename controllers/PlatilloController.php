@@ -3,9 +3,10 @@
 namespace app\controllers;
 
 use Yii;
+use yii\web\Controller;
 use app\models\Platillo;
 use app\models\PlatilloSearch;
-use yii\web\Controller;
+use app\models\UploadForm;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -57,6 +58,27 @@ class PlatilloController extends Controller
         ]);
     }
 
+    public function actionUpload($id)
+    {
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            $model->imagen = date('ymd').'-'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
+
+            if ($model->save()) {
+                $model->upload();
+                return $this->render('view', [
+                    'model' => $this->findModel($id),
+                ]);
+            }
+        }
+
+        return $this->render('upload', [
+            'model' => $model
+        ]);
+    }
+
     /**
      * Creates a new Platillo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -92,7 +114,10 @@ class PlatilloController extends Controller
     {
         $model = $this->findModel($id);
 
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->imagen = "hola.jpg";
+            $model->save();
             return $this->redirect(['view', 'id' => $model->platillo_id]);
         } else {
             return $this->render('update', [
