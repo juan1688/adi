@@ -10,13 +10,13 @@ use yii\widgets\ActiveForm;
 
 <div class="platillo-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'miltipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'descripcion')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'imagen')->fileInput() ?>
+    <?= $form->field($model, 'imageFile')->fileInput() ?>
 
     <?= $form->field($model, 'precio')->textInput(['maxlength' => true]) ?>
 

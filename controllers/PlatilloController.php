@@ -62,7 +62,7 @@ class PlatilloController extends Controller
     {
         $model = $this->findModel($id);
 
-        if (Yii::$app->request->isPost) {
+        if ($model->load(Yii::$app->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             $model->imagen = date('ymd').'-'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
 
@@ -92,11 +92,11 @@ class PlatilloController extends Controller
             $imageName = $model->nombre;
             $model->imagen = UploadedFile::getInstance($model,'imagen');
             $model->imagen->saveAs('uploads/'.$imageName.'.'.$model->file->extension);
-
             $model->imagen = 'uploads/'.$imageName.'.'.$model->file->extension;
-
             $model->save();
+
             return $this->redirect(['view', 'id' => $model->platillo_id]);
+
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -114,11 +114,16 @@ class PlatilloController extends Controller
     {
         $model = $this->findModel($id);
 
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->imagen = "hola.jpg";
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->platillo_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            $model->imagen = date('ymd').'-'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
+            if ($model->save()) {
+                $model->upload();
+                return $this->render('view', [
+                    'model' => $this->findModel($id),
+                ]);
+            }
+            // return $this->redirect(['view', 'id' => $model->platillo_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
