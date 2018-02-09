@@ -32,7 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'platillo_id',
             'nombre',
             'descripcion:ntext',
-            'imagen:ntext',
+            // 'imagen:ntext',
+            [
+                'attribute'=>'imagen',
+
+                'value'=>'@web/uploads/'.$model->imagen,
+                'format' => ['image',['width'=>'100','height'=>'100']],
+            ],
             'precio',
         ],
     ]) ?>

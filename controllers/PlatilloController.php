@@ -89,13 +89,13 @@ class PlatilloController extends Controller
         $model = new Platillo();
 
         if ($model->load(Yii::$app->request->post())) {
-            $imageName = $model->nombre;
-            $model->imagen = UploadedFile::getInstance($model,'imagen');
-            $model->imagen->saveAs('uploads/'.$imageName.'.'.$model->file->extension);
-            $model->imagen = 'uploads/'.$imageName.'.'.$model->file->extension;
-            $model->save();
-
-            return $this->redirect(['view', 'id' => $model->platillo_id]);
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            $model->imagen = date('ymd').'-'.$model->imageFile->baseName.'.'.$model->imageFile->extension;
+            
+            if ($model->save()) {
+                $model->upload();
+                return $this->redirect(['view', 'id' => $model->platillo_id]);
+            }
 
         } else {
             return $this->render('create', [
